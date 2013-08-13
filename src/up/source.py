@@ -4,7 +4,6 @@ from urllib.error import HTTPError, URLError
 from http.client import BadStatusLine, IncompleteRead
 import io
 import gzip
-import re
 import json
 import time
 import threading

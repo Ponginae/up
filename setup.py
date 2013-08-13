@@ -1,9 +1,8 @@
-import os
-
+import os.path
 from setuptools import setup, find_packages
 
-here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.md')).read()
+with open(os.path.join(os.path.dirname(__file__), 'README.txt')) as file:
+    README = file.read()
 
 requires = [
     'pymongo',
@@ -22,7 +21,6 @@ setup(
         "Intended Audience :: End Users/Desktop",
         "Programming Language :: Python :: 3.3",
         "Topic :: Internet :: WWW/HTTP",
-        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         "Topic :: Office/Business"
     ],
     author='Aaron Spaulding',
@@ -30,7 +28,7 @@ setup(
     packages=find_packages('src'),
     package_dir={'': 'src'},
     include_package_data=True,
-    zip_safe=False,
+    zip_safe=True,
     install_requires=requires,
     tests_require=requires,
     test_suite="up",
