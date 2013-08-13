@@ -9,6 +9,7 @@ Setup
 First start by installing the environment.
 
 ::
+
     $ mkdir example-status
 
     $ cd example-status

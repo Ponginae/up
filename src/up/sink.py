@@ -1,9 +1,31 @@
+"""
+
+.. autoclass:: StatusSink
+   :members:
+   :undoc-members:
+
+.. autoclass:: TreeStatusSink
+   :members:
+   :undoc-members:
+
+.. autoclass:: MongoStatusSink
+   :members:
+   :undoc-members:
+
+.. autoclass:: StdOutStatusSink
+   :members:
+   :undoc-members:
+
+"""
+
 from pymongo import MongoClient
 from up.util import NAME_SEPARATOR, colors
 from up.moods import moods
 
 
 class StatusSink(object):
+    """
+    """
 
     def process_status(self, status, deep=0, surname=''):
         raise NotImplemented

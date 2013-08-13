@@ -1,4 +1,13 @@
-from up import source, sink, annotation
+"""
+
+.. autoclass:: StatusMonitor
+   :members:
+   :undoc-members:
+
+
+"""
+
+from up import annotation
 from up.moods import moods
 from argparse import ArgumentParser
 import sys
@@ -6,6 +15,9 @@ import os.path
 
 
 class StatusMonitor(object):
+    """
+    A status monitor. Inherit from this class to create your own.
+    """
     source = None
     sink = None
 

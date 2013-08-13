@@ -1,3 +1,31 @@
+"""
+
+.. autoclass:: StatusSource
+   :members:
+   :undoc-members:
+
+.. autoclass:: StatusTreeSource
+   :members:
+   :undoc-members:
+
+.. autoclass:: ThreadedTreeSource
+   :members:
+   :undoc-members:
+
+.. autoclass:: ThreadedTreeSource
+   :members:
+   :undoc-members:
+
+.. autoclass:: HTTPStatusSource
+   :members:
+   :undoc-members:
+
+.. autoclass:: GitHubStatusSource
+   :members:
+   :undoc-members:
+
+"""
+
 from up.util import NAME_SEPARATOR
 from urllib.request import build_opener, Request
 from urllib.error import HTTPError, URLError
