@@ -1,8 +1,7 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 # Up documentation build configuration file, created by
-# sphinx-quickstart on Tue Aug 13 08:21:04 2013.
+# sphinx-quickstart on Sat Aug 17 15:17:01 2013.
 #
 # This file is execfile()d with the current directory set to its containing dir.
 #
@@ -26,7 +25,7 @@ import sys, os
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.coverage']
+extensions = ['sphinx.ext.autodoc']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -41,15 +40,15 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'Up'
-copyright = '2013, Aaron Spaulding'
+project = u'Up'
+copyright = u'2013, Aaron Spaulding'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = '0.1'
+version = '0.1.0'
 # The full version, including alpha/beta/rc tags.
 release = '0.1.0'
 
@@ -65,7 +64,7 @@ release = '0.1.0'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = []
+exclude_patterns = ['_build']
 
 # The reST default role (used for this markup: `text`) to use for all documents.
 #default_role = None
@@ -187,8 +186,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Up.tex', 'Up Documentation',
-   'Aaron Spaulding', 'manual'),
+  ('index', 'Up.tex', u'Up Documentation',
+   u'Aaron Spaulding', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -217,8 +216,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'up', 'Up Documentation',
-     ['Aaron Spaulding'], 1)
+    ('index', 'up', u'Up Documentation',
+     [u'Aaron Spaulding'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -231,8 +230,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Up', 'Up Documentation',
-   'Aaron Spaulding', 'Up', 'One line description of project.',
+  ('index', 'Up', u'Up Documentation',
+   u'Aaron Spaulding', 'Up', 'One line description of project.',
    'Miscellaneous'),
 ]
 
