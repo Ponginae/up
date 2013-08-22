@@ -45,6 +45,9 @@ class InvalidNameError(Exception):
 
 
 class StatusSource(object):
+    """
+    A base class for a status. All statuses should extend from this class.
+    """
     def __init__(self, name):
         super(StatusSource, self).__init__()
 
@@ -57,15 +60,26 @@ class StatusSource(object):
         self.duration = 0
 
     def timed_prepare(self):
+        """
+        Call prepare and record the amount of time it takes to finish.
+        """
         self.date = time.time()
         self.prepare()
         self.duration = time.time() - self.date
 
     def prepare(self):
+        """
+        Abstract method, implementing classes should use this hook to poll the
+        status and update `self.status`.
+        """
         raise NotImplemented
 
 
 class StatusTreeSource(StatusSource):
+    """
+    A tree source allows you to organize your statuses. It will allow you to see
+    the combined status of all of the statuses underneath it.
+    """
     def __init__(self, name, children=None):
         super(StatusTreeSource, self).__init__(name)
 
@@ -76,6 +90,9 @@ class StatusTreeSource(StatusSource):
         self.children = children
 
     def calculate(self):
+        """
+        Calculates the percentage of the children that are up.
+        """
         total = 0
 
         for child in self.children:
@@ -87,6 +104,10 @@ class StatusTreeSource(StatusSource):
         return 0
 
     def prepare(self):
+        """
+        Calls `timed_prepare` on all of its children and sets its status to the
+        percentage of children that are up.
+        """
 
         for child in self.children:
             child.timed_prepare()
@@ -95,6 +116,11 @@ class StatusTreeSource(StatusSource):
 
 
 class ThreadedTreeSource(StatusTreeSource):
+    """
+    Similar to `StatusTreeSource`, `ThreadedTreeSource` runs all of the
+    `timed_prepare` calls in parallel. This is useful for statuses that require
+    network access.
+    """
 
     def __threaded_prepare(self, source):
         source.timed_prepare()
@@ -114,6 +140,16 @@ class ThreadedTreeSource(StatusTreeSource):
 
 
 class HTTPStatusSource(StatusSource):
+    """
+    Makes a request to a url and uses the HTTP status code to determine of the
+    server is up.
+
+    Redirects are followed before determining the status.If the status code is
+    2xx the server is considered to be up. Status codes 4xx, 5xx, truncated
+    connections, or otherwise mangled responses are considered down.
+
+    You can also use this as a basis for parsed statuses.
+    """
     def __init__(self, name, url):
         super(HTTPStatusSource, self).__init__(name)
 
@@ -147,6 +183,15 @@ class HTTPStatusSource(StatusSource):
 
 
 class GitHubStatusSource(HTTPStatusSource):
+    """
+    Using the `GitHub status api <https://status.github.com/>`_ you can retrieve
+    the current status of GitHub.
+
+    GitHub Statuses:
+    Good maps to UP
+    Minor maps to HALF UP
+    Major maps to DOWN
+    """
     def __init__(self, name='GitHub', url='https://status.github.com/api/status.json'):
         super(GitHubStatusSource, self).__init__(name, url)
 
@@ -156,7 +201,6 @@ class GitHubStatusSource(HTTPStatusSource):
         self.status = DOWN
 
         self.result = json.loads(self.result)
-        # TODO: Find something to do with 'minor' and 'major' statuses.
         # TODO: Find something to do with 'last_updated' date.
         if self.result['status'] == 'good':
             self.status = UP

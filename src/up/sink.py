@@ -25,12 +25,25 @@ from up.moods import moods
 
 class StatusSink(object):
     """
+    A base class for a sink. Sinks are used for outputting the the statuses
+    gathered by sources.
     """
 
     def process_status(self, status, deep=0, surname=''):
+        """
+        Implementing classes should implement this hook to output an individual
+        status.
+
+        :param status: a status object to be output.
+        :param deep: an int of the number of `StatusTreeSource` that have been traversed down.
+        :param surname: The names of all of the parent sources concatenated with a '/'.
+        """
         raise NotImplemented
 
     def add_annotation(self, note):
+        """
+        Add an annotation to the output.
+        """
         raise NotImplemented
 
     def set_mood(self, mood):
@@ -56,6 +69,9 @@ class StatusSink(object):
 
 
 class TreeStatusSink(StatusSink):
+    """
+    Output a source to multiple sinks.
+    """
     def __init__(self, children):
         super(TreeStatusSink, self).__init__()
         self.children = children
@@ -78,6 +94,11 @@ class TreeStatusSink(StatusSink):
 
 
 class MongoStatusSink(StatusSink):
+    """
+    Output a source to MongoDB. Each status is stored as a separate document.
+
+    Up-web requires statuses to be stored with this sink.
+    """
     DB_NAME = 'up'
 
     def __init__(self, domain, port):
@@ -98,6 +119,9 @@ class MongoStatusSink(StatusSink):
 
 
 class StdOutStatusSink(StatusSink):
+    """
+    Output a source to stdout with fancy colors for easy skimming.
+    """
 
     messages = {
         moods.REALIST: [

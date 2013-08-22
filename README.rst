@@ -22,7 +22,7 @@ Now you need to create the `upfile.py`. It goes in the same folder as everything
 
 ::
 
-    from up import status, source
+    from up import status, source, sink
 
     class ExampleStatus(status.StatusMonitor):
 
@@ -35,6 +35,63 @@ You can now run it like this.
 
     $ bin/up
     Example Status: UP
+
+Monitoring Multiple URL's
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Up uses a "tinker-toy" pattern allowing you to combine sources to build whatever
+kind of monitor you need. A `StatusTreeSource` will let you combine multiple
+sources into one.
+
+::
+
+    from up import status, source, sink
+
+    class ExampleStatus(status.StatusMonitor):
+
+        # You can also try a ThreadedTreeSource which runs the monitors
+        # in parallel.
+        source = StatusTreeSource('Example Status', [
+            source.HTTPStatusSource('PROD', 'https://example.com/'),
+            source.HTTPStatusSource('QA', 'https://qa.example.com/')
+        ])
+        sink = sink.StdOutStatusSink()
+
+Up will query each of the sources and give you a simplified status.
+
+::
+
+    $ bin/up
+    Example Status: HALF UP
+
+For more information use -v.
+
+::
+
+    $ bin/up -v
+    Example Status: HALF UP (50%)
+        PROD: UP
+        QA: DOWN
+
+Checking the status of GitHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Up comes with a source that reads from GitHub's status API.
+
+::
+
+    from up import status, source, sink
+
+    class ExampleStatus(status.StatusMonitor):
+
+        source = source.GitHubStatusSource('GitHub Status')
+        sink = sink.StdOutStatusSink()
+
+::
+
+    $ bin/up -v
+    GitHub Status: UP
+
 
 Developers Setup
 ----------------
