@@ -30,6 +30,7 @@ from up.util import NAME_SEPARATOR
 from urllib.request import build_opener, Request
 from urllib.error import HTTPError, URLError
 from http.client import BadStatusLine, IncompleteRead
+from pysnmp.entity.rfc3413.oneliner import cmdgen
 import io
 import gzip
 import json
@@ -51,7 +52,7 @@ class StatusSource(object):
     def __init__(self, name):
         super(StatusSource, self).__init__()
 
-        if NAME_SEPARATOR in name:
+        if name is not None and NAME_SEPARATOR in name:
             raise InvalidNameError('name contains invalid character "' + NAME_SEPARATOR + '"')
 
         self.name = name
@@ -206,3 +207,43 @@ class GitHubStatusSource(HTTPStatusSource):
             self.status = UP
         elif self.result['status'] == 'minor':
             self.status = 0.5
+
+
+class SNMPStatusSource(StatusSource):
+    def __init__(self, name=None, domain=None, port=161):
+        super(SNMPStatusSource, self).__init__(name)
+
+        if domain is None:
+            raise ValueError("domain must be specified.")
+
+        self.domain = domain
+        self.port = port
+        self.commands = [
+            cmdgen.CommunityData('public'),
+            cmdgen.UdpTransportTarget((self.domain, self.port)),
+            cmdgen.MibVariable('SNMPv2-MIB', 'sysName', 0)
+        ]
+
+    def prepare(self):
+        cmdGen = cmdgen.CommandGenerator()
+
+        errorIndication, errorStatus, errorIndex, varBinds = cmdGen.getCmd(*self.commands)
+
+        # Check for errors and print out results
+        if errorIndication:
+            self.status = DOWN
+            #print(errorIndication)
+        else:
+            if errorStatus:
+                self.status = DOWN
+                #print('%s at %s' % (
+                #    errorStatus.prettyPrint(),
+                #    errorIndex and varBinds[int(errorIndex)-1] or '?'
+                #))
+            else:
+                if self.name is None:
+                    # the first variable requested is the name
+                    self.name = str(varBinds[0][1])
+
+                #for name, val in varBinds:
+                #    print('%s = %s' % (name.prettyPrint(), val.prettyPrint()))

@@ -5,6 +5,7 @@ with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as file:
     README = file.read()
 
 requires = [
+    'pysnmp',
     'pymongo',
     'flask'
 ]
