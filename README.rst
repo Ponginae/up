@@ -8,7 +8,7 @@ Setup
 
 First start by installing the environment.
 
-::
+.. code:: shell
 
     $ mkdir example-status
 
@@ -20,7 +20,7 @@ First start by installing the environment.
 
 Now you need to create the `upfile.py`. It goes in the same folder as everything else. From here you can setup what you want to monitor.
 
-::
+.. code:: python
 
     from up import status, source, sink
 
@@ -31,7 +31,7 @@ Now you need to create the `upfile.py`. It goes in the same folder as everything
 
 You can now run it like this.
 
-::
+.. code:: shell
 
     $ bin/up
     Example Status: UP
@@ -43,7 +43,7 @@ Up uses a "tinker-toy" pattern allowing you to combine sources to build whatever
 kind of monitor you need. A `StatusTreeSource` will let you combine multiple
 sources into one.
 
-::
+.. code:: python
 
     from up import status, source, sink
 
@@ -59,14 +59,14 @@ sources into one.
 
 Up will query each of the sources and give you a simplified status.
 
-::
+.. code:: shell
 
     $ bin/up
     Example Status: HALF UP
 
 For more information use -v.
 
-::
+.. code:: shell
 
     $ bin/up -v
     Example Status: HALF UP (50%)
@@ -78,7 +78,7 @@ Checking the status of GitHub
 
 Up comes with a source that reads from GitHub's status API.
 
-::
+.. code:: python
 
     from up import status, source, sink
 
@@ -87,7 +87,7 @@ Up comes with a source that reads from GitHub's status API.
         source = source.GitHubStatusSource('GitHub Status')
         sink = sink.StdOutStatusSink()
 
-::
+.. code:: shell
 
     $ bin/up -v
     GitHub Status: UP
@@ -96,7 +96,7 @@ Up comes with a source that reads from GitHub's status API.
 Developers Setup
 ----------------
 
-::
+.. code:: shell
 
     $ virtualenv . -p python3 --no-site-packages
 
