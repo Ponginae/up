@@ -1,7 +1,7 @@
 Up - A next generation status monitor
 =====================================
 
-Some times you just need to know, is it up? The goal of this project is to create a easy to use, but highly customizable status monitor.
+Sometimes you just need to know, is it up? The goal of this project is to create an easy to use, but highly customizable status monitor.
 
 Setup
 -----
@@ -78,7 +78,7 @@ Checking the status of GitHub
 
 Up comes with a source that reads from GitHub's status API.
 
-.. code:: python
+.. code-block:: python
 
     from up import status, source, sink
 
@@ -96,8 +96,14 @@ Up comes with a source that reads from GitHub's status API.
 Developers Setup
 ----------------
 
-.. code:: shell
+.. code:: sh
 
     $ virtualenv . -p python3 --no-site-packages
 
     $ bin/python setup.py develop
+
+Changelog
+---------
+
+**Next** - Basic SNMP monitoring
+0.1.0 - Initial release
