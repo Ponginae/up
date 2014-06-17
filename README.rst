@@ -105,5 +105,6 @@ Developers Setup
 Changelog
 ---------
 
+- **Next** Nothing Yet.
 - 0.2.0 - Detect ConnectionError and set status to DOWN; Expose Web Interface; Experimental SNMP monitoring (will most likely change)
 - 0.1.0 - Initial release
