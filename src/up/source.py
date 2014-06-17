@@ -179,7 +179,7 @@ class HTTPStatusSource(StatusSource):
 
             try:
                 self.result = self._get_result()
-            except (HTTPError, URLError, BadStatusLine, IncompleteRead):
+            except (HTTPError, ConnectionError, URLError, BadStatusLine, IncompleteRead):
                 self.status = DOWN
 
 

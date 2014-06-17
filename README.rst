@@ -51,7 +51,7 @@ sources into one.
 
         # You can also try a ThreadedTreeSource which runs the monitors
         # in parallel.
-        source = StatusTreeSource('Example Status', [
+        source = source.StatusTreeSource('Example Status', [
             source.HTTPStatusSource('PROD', 'https://example.com/'),
             source.HTTPStatusSource('QA', 'https://qa.example.com/')
         ])
@@ -105,5 +105,5 @@ Developers Setup
 Changelog
 ---------
 
-- **Next** - Basic SNMP monitoring
+- 0.2.0 - Detect ConnectionError and set status to DOWN; Expose Web Interface; Experimental SNMP monitoring (will most likely change)
 - 0.1.0 - Initial release
