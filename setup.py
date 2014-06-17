@@ -12,7 +12,7 @@ requires = [
 
 setup(
     name='up',
-    version='0.2.0',
+    version='0.2.1',
     description='Up - A next generation status monitor',
     long_description=README,
     classifiers=[
